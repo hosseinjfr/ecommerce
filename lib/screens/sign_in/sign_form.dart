@@ -1,42 +1,12 @@
-import 'package:ecommerce/components/default_button.dart';
-import 'package:ecommerce/constants.dart';
-import 'package:ecommerce/size_config.dart';
+import 'package:ecommerce/screens/login_success/login_success.dart';
 import 'package:flutter/material.dart';
+
 import '../../../components/custom_suffix_icon.dart';
+import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
-
-class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: [
-            Text(
-              'Welcome Back',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: getProportionateScreenWidth(28),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Text(
-              'Sign in with your email and passsword \n or countinue with social media',
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(10)),
-                child: const SignIn()),
-          ],
-        ),
-      ),
-    );
-  }
-}
+import '../../../constants.dart';
+import '../../../size_config.dart';
+import '../forgot_password/forgot_password_screen.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -51,6 +21,7 @@ class _SignInState extends State<SignIn> {
 
   String email = '';
   String password = '';
+  bool remember = false;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -67,13 +38,25 @@ class _SignInState extends State<SignIn> {
           ),
           Row(
             children: [
-              Checkbox(value: false, onChanged: (Value) {}),
+              Checkbox(
+                value: remember,
+                activeColor: kPrimaryColor,
+                onChanged: (Value) {
+                  setState(() {
+                    remember = Value!;
+                  });
+                },
+              ),
               const Text('Remember me'),
               const Spacer(),
-              const Text(
-                'Forgot Password',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
+              GestureDetector(
+                onTap: () =>
+                    Navigator.pushNamed(context, ForgotPassword.routeName),
+                child: const Text(
+                  'Forgot Password',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               )
             ],
@@ -90,6 +73,7 @@ class _SignInState extends State<SignIn> {
               press: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
+                  Navigator.pushNamed(context, LoginSuccess.routeName);
                 }
               }),
           SizedBox(
@@ -120,10 +104,12 @@ class _SignInState extends State<SignIn> {
           setState(() {
             error.add(kPassNullError);
           });
+          return "";
         } else if (value.length < 8 && !error.contains(kShortPassError)) {
           setState(() {
             error.add(kShortPassError);
           });
+          return "";
         }
         return null;
       },
@@ -157,10 +143,12 @@ class _SignInState extends State<SignIn> {
           setState(() {
             error.add(kEmailNullError);
           });
+          return "";
         } else if (value.isNotEmpty && !error.contains(kInvalidEmailError)) {
           setState(() {
             error.add(kInvalidEmailError);
           });
+          return "";
         }
         return null;
       },

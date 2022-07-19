@@ -1,4 +1,4 @@
-import 'package:ecommerce/screens/splash/sign_in/body.dart';
+import 'package:ecommerce/screens/sign_in/body.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatelessWidget {

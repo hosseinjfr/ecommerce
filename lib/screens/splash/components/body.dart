@@ -1,10 +1,10 @@
 import 'package:ecommerce/constants.dart';
 import 'package:ecommerce/screens/splash/components/splash_content.dart';
-import 'package:ecommerce/screens/splash/sign_in/sign_in_screen.dart';
 import 'package:ecommerce/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/default_button.dart';
+import '../../sign_in/sign_in_screen.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
